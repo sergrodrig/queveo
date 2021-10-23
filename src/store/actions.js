@@ -3,23 +3,32 @@
 import axios from 'axios'
 
 export default {
-  async fetchMovieById ({ commit }, movieId) {
-    const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.VUE_APP_THEMOVIEDB_APIKEY}`
+  async fetchShowById (context, showId) {
+    const url = `https://api.themoviedb.org/3/tv/${showId}?api_key=${process.env.VUE_APP_THEMOVIEDB_APIKEY}`
     const response = await axios.get(url).then((response) => response.data)
-    commit('setItem', { resource: 'movies', item: response })
     return response
   },
 
-  async fetchMovieCast ({ commit }, movieId) {
+  async fetchMovieById (context, movieId) {
+    const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.VUE_APP_THEMOVIEDB_APIKEY}`
+    const response = await axios.get(url).then((response) => response.data)
+    return response
+  },
+
+  async fetchMovieCast (context, movieId) {
     const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${process.env.VUE_APP_THEMOVIEDB_APIKEY}&language=en-US`
     const response = await axios.get(url).then((response) => response.data)
     return response
   },
 
   async searchMovie (context, query) {
-    console.log(`buscando pelicula: ${query}`)
-    // const url = `https://api.themoviedb.org/3/search/movie?api_key=cc5b7ea797f3c034bdc62563ed54ed73&query=${query}&language=en-US&page=1&include_adult=false`
     const url = `https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${process.env.VUE_APP_THEMOVIEDB_APIKEY}&page=1`
+    const response = await axios.get(url).then((response) => response.data)
+    return response
+  },
+
+  async discoverMedia (context, mediaType = 'movie') {
+    const url = `https://api.themoviedb.org/3/discover/${mediaType}?api_key=${process.env.VUE_APP_THEMOVIEDB_APIKEY}`
     const response = await axios.get(url).then((response) => response.data)
     return response
   }
@@ -69,7 +78,6 @@ export default {
   // Create document in Firestore collection
   // createCurso: ({ dispatch }, document) => { dispatch('createDocumentInFirebaseCollection', { collection: 'cursos', document }) },
   // createDocumentInFirebaseCollection: ({ commit }, { collection, document }) => {
-  //   // console.log(`action => createDocumentInFirebaseCollection ${collection}`)
   //   const docRef = firebase.firestore().collection(collection).doc()
   //   const { id } = docRef
   //   const publishedAt = firebase.firestore.FieldValue.serverTimestamp()

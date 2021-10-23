@@ -1,17 +1,15 @@
 <template>
   <div>
-    <div v-show="!pageReady">
-      Cargando
-    </div>
+    <div v-show="!pageReady" />
     <div
       v-show="pageReady"
       class="px-8 pt-8 pb-24 space-y-4 text-white"
     >
-      <!-- poster y taggenress -->
+      <!-- poster y genres -->
       <div class="space-y-2">
         <img
           v-if="movieDetail.poster_path"
-          :src="`https://image.tmdb.org/t/p/original/${movieDetail.poster_path}`"
+          :src="getPhotoUrl(movieDetail.poster_path)"
           alt="poster"
         >
         <ul class="flex flex-wrap">
@@ -70,7 +68,7 @@
               :key="cast.id"
             >
               <img
-                :src="`https://image.tmdb.org/t/p/original/${cast.profile_path}`"
+                :src="getPhotoUrl(cast.profile_path)"
                 alt="actor photo"
                 class="object-cover w-12 h-12 rounded-full"
                 @load="onImgLoad"
@@ -92,7 +90,7 @@
             >
               <img
                 v-show="company.logo_path"
-                :src="`https://image.tmdb.org/t/p/w92/${company.logo_path}`"
+                :src="getPhotoUrl(company.logo_path)"
                 class="w-8"
               >
             </li>
@@ -106,8 +104,10 @@
 <script>
 import { mapActions } from 'vuex'
 import SvgStar from '@/components/AppSvgStar'
+import { getPhotoUrl } from '@/helpers/themoviedbapi'
 
 export default {
+  name: 'Movie',
   components: { SvgStar },
   emits: ['ready'],
   data () {
@@ -140,13 +140,12 @@ export default {
     const cast = await this.fetchMovieCast(movie.id)
     this.movieDetail = { ...movie, ...cast }
     this.dataFetched = true
-    console.log('data fetched from api')
   },
   methods: {
     ...mapActions(['fetchMovieById', 'fetchMovieCast']),
+    getPhotoUrl,
     onImgLoad () {
       this.posterLoaded = true
-      console.log('image loaded')
     }
   }
 }
