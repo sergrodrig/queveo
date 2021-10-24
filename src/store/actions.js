@@ -1,34 +1,35 @@
 // import firebase from 'firebase/app'
 // import 'firebase/firestore'
 import axios from 'axios'
+import TheMovieDBAPI from '@/config/themoviedb'
 
 export default {
   async fetchShowById (context, showId) {
-    const url = `https://api.themoviedb.org/3/tv/${showId}?api_key=${process.env.VUE_APP_THEMOVIEDB_APIKEY}`
+    const url = `https://api.themoviedb.org/3/tv/${showId}?api_key=${TheMovieDBAPI.themoviedbapi}`
     const response = await axios.get(url).then((response) => response.data)
     return response
   },
 
   async fetchMovieById (context, movieId) {
-    const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.VUE_APP_THEMOVIEDB_APIKEY}`
+    const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${TheMovieDBAPI.themoviedbapi}`
     const response = await axios.get(url).then((response) => response.data)
     return response
   },
 
   async fetchMovieCast (context, movieId) {
-    const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${process.env.VUE_APP_THEMOVIEDB_APIKEY}&language=en-US`
+    const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${TheMovieDBAPI.themoviedbapi}&language=en-US`
     const response = await axios.get(url).then((response) => response.data)
     return response
   },
 
   async searchMovie (context, query) {
-    const url = `https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${process.env.VUE_APP_THEMOVIEDB_APIKEY}&page=1`
+    const url = `https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${TheMovieDBAPI.themoviedbapi}&page=1`
     const response = await axios.get(url).then((response) => response.data)
     return response
   },
 
   async discoverMedia (context, mediaType = 'movie') {
-    const url = `https://api.themoviedb.org/3/discover/${mediaType}?api_key=${process.env.VUE_APP_THEMOVIEDB_APIKEY}`
+    const url = `https://api.themoviedb.org/3/discover/${mediaType}?api_key=${TheMovieDBAPI.themoviedbapi}`
     const response = await axios.get(url).then((response) => response.data)
     return response
   }
