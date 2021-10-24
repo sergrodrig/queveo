@@ -1,6 +1,15 @@
 <template>
   <div class="space-y-2">
-    <p class="pb-2 text-2xl font-bold border-b border-gray-50">
+    <p
+      v-if="mediaType === 'movie'"
+      class="pb-2 text-2xl font-bold border-b border-gray-50"
+    >
+      Peliculas mas populares
+    </p>
+    <p
+      v-if="mediaType === 'tv'"
+      class="pb-2 text-2xl font-bold border-b border-gray-50"
+    >
       Series mas populares
     </p>
     <ul
@@ -11,24 +20,10 @@
         v-for="item in items"
         :key="item.id"
       >
-        <router-link
-          v-if="mediaType === 'movie'"
-          :to="{ name: 'MovieDetail', params: { movieId: item.id }}"
-        >
-          <img
-            :src="getPhotoUrl(item.poster_path, 'w185')"
-            alt="poster photo"
-          >
-        </router-link>
-        <router-link
-          v-if="mediaType === 'tv'"
-          :to="{ name: 'ShowDetail', params: { showId: item.id }}"
-        >
-          <img
-            :src="getPhotoUrl(item.poster_path, 'w185')"
-            alt="poster photo"
-          >
-        </router-link>
+        <DiscoverMediaItem
+          :media-type="mediaType"
+          :item="item"
+        />
       </li>
     </ul>
   </div>
@@ -36,18 +31,33 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { getPhotoUrl } from '@/helpers/themoviedbapi'
+import DiscoverMediaItem from '@/components/DiscoverMediaItem'
 
 export default {
+  name: 'DiscoverMedia',
+  components: {
+    DiscoverMediaItem
+  },
   props: {
     mediaType: {
       type: String,
       required: true
     }
   },
+  emits: ['ready'],
   data () {
     return {
+      dataFetched: false,
+      posterLoaded: false,
       items: []
+    }
+  },
+  computed: {
+    pageReady () {
+      if (this.dataFetched && this.posterLoaded) {
+        this.$emit('ready')
+        return true
+      } else return false
     }
   },
   async created () {
@@ -57,8 +67,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['discoverMedia']),
-    getPhotoUrl
+    ...mapActions(['discoverMedia'])
   }
 }
 </script>
