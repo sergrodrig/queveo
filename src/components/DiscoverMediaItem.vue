@@ -4,7 +4,7 @@
     :to="{ name: 'MovieDetail', params: { movieId: item.id }}"
   >
     <img
-      :src="getPhotoUrl(item.poster_path, 'w185')"
+      :src="getPhotoUrl(item.poster_path, size)"
       alt="poster photo"
     >
   </router-link>
@@ -31,6 +31,10 @@ export default {
     item: {
       type: Object,
       required: true
+    },
+    size: {
+      type: String,
+      default: 'w185'
     }
   },
   methods: {

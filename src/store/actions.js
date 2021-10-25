@@ -23,8 +23,10 @@ export default {
   },
 
   async searchMovie (context, query) {
+    console.log(`searching movie ${query}`)
     const url = `https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${TheMovieDBAPI.themoviedbapi}&page=1`
     const response = await axios.get(url).then((response) => response.data)
+    console.log(response)
     return response
   },
 
