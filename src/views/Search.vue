@@ -22,7 +22,16 @@
 
     <!-- resultados -->
     <div class="px-8 pt-8 pb-32 mx-auto sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl">
-      <ul class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <p
+        v-if="items.length === 0"
+        class="text-center text-white"
+      >
+        No hay resultados.
+      </p>
+      <ul
+        v-if="items"
+        class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+      >
         <li
           v-for="item in items"
           :key="item.id"
@@ -60,7 +69,8 @@ export default {
     ...mapActions(['searchMovie']),
     async buscar () {
       const res = await this.searchMovie(this.busqueda)
-      this.items = res.results
+      if (res) this.items = res?.results
+      else this.items = null
     }
   }
 }
