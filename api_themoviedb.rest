@@ -1,0 +1,17 @@
+### Obtener informacion de un actor
+GET https://api.themoviedb.org/3/person/2524?api_key=cc5b7ea797f3c034bdc62563ed54ed73
+
+### Obtener informacion de una serie
+GET https://api.themoviedb.org/3/tv/60574?api_key=cc5b7ea797f3c034bdc62563ed54ed73
+
+### Obtener informacion de una pelicula
+GET https://api.themoviedb.org/3/movie/580489?api_key=cc5b7ea797f3c034bdc62563ed54ed73
+
+### Obtener actores de una pelicula
+GET https://api.themoviedb.org/3/movie/580489/credits?api_key=cc5b7ea797f3c034bdc62563ed54ed73&language=en-US
+
+### Buscar una pelicula
+GET https://api.themoviedb.org/3/search/movie?query=matrix&api_key=cc5b7ea797f3c034bdc62563ed54ed73&page=1
+
+### Descubrir las peliculas mas populares
+GET https://api.themoviedb.org/3/discover/movie?api_key=cc5b7ea797f3c034bdc62563ed54ed73

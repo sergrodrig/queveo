@@ -75,12 +75,14 @@
                 v-for="cast in casting"
                 :key="cast.id"
               >
-                <img
-                  :src="getPhotoUrl(cast.profile_path)"
-                  alt="actor photo"
-                  class="object-cover w-12 h-12 rounded-full"
-                  @load="onImgLoad"
-                >
+                <router-link :to="{ name: 'PersonDetail', params: { personId: cast.id} }">
+                  <img
+                    :src="getPhotoUrl(cast.profile_path)"
+                    alt="actor photo"
+                    class="object-cover w-12 h-12 rounded-full"
+                    @load="onImgLoad"
+                  >
+                </router-link>
               </li>
             </ul>
           </div>

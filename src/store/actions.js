@@ -4,30 +4,36 @@ import axios from 'axios'
 import TheMovieDBAPI from '@/config/themoviedb'
 
 export default {
+  async fetchCrewById (context, crewId) {
+    const url = `https://api.themoviedb.org/3/person/${crewId}?api_key=${TheMovieDBAPI.themoviedbapi}`
+    const response = await axios.get(url).then((response) => response.data)
+    return response
+  },
+  async fetchCrewCredits (context, crewId) {
+    const url = `https://api.themoviedb.org/3/person/${crewId}/combined_credits?api_key=${TheMovieDBAPI.themoviedbapi}`
+    const response = await axios.get(url).then((response) => response.data)
+    return response
+  },
   async fetchShowById (context, showId) {
     const url = `https://api.themoviedb.org/3/tv/${showId}?api_key=${TheMovieDBAPI.themoviedbapi}`
     const response = await axios.get(url).then((response) => response.data)
     return response
   },
-
   async fetchMovieById (context, movieId) {
     const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${TheMovieDBAPI.themoviedbapi}`
     const response = await axios.get(url).then((response) => response.data)
     return response
   },
-
   async fetchMovieCast (context, movieId) {
     const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${TheMovieDBAPI.themoviedbapi}&language=en-US`
     const response = await axios.get(url).then((response) => response.data)
     return response
   },
-
   async searchMovie (context, query) {
     const url = `https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${TheMovieDBAPI.themoviedbapi}&page=1`
     const response = await axios.get(url).then((response) => response.data)
     return response || null
   },
-
   async discoverMedia (context, mediaType = 'movie') {
     const url = `https://api.themoviedb.org/3/discover/${mediaType}?api_key=${TheMovieDBAPI.themoviedbapi}`
     const response = await axios.get(url).then((response) => response.data)
